@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import { HttpModule, BaseRequestOptions } from "@angular/http";
+import { AuthHttp, provideAuth } from 'angular2-jwt';
 
 import { MockBackend } from '@angular/http/testing';
 
@@ -11,6 +12,7 @@ import { AuthService } from './services/auth.service';
 
 import { AuthGuard } from './services/auth-guard.service';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { OrderService } from './services/order.service';
 
 
 import { AppComponent } from './app.component';
@@ -38,7 +40,23 @@ import { AdminComponent } from './admin/admin.component';
       {path : 'no-access' , component : NoAccessComponent},
     ])
   ],
-  providers: [AuthService,fakeBackendProvider,MockBackend,BaseRequestOptions,AuthGuard,AdminAuthGuard],
+  providers: [
+      AuthService
+      ,fakeBackendProvider
+      ,MockBackend
+      ,BaseRequestOptions
+      ,AuthGuard
+      ,AdminAuthGuard
+      ,OrderService
+      ,AuthHttp
+      ,provideAuth({
+        headerName: 'Authorization',
+        headerPrefix: 'Bearer',
+        tokenName: 'token',
+        tokenGetter: (() => localStorage.getItem('token')),
+        globalHeaders: [{ 'Content-Type': 'application/json' }],
+        noJwtError: true})
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
