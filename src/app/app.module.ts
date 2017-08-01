@@ -1,16 +1,41 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import { HttpModule, BaseRequestOptions } from "@angular/http";
+
+import { MockBackend } from '@angular/http/testing';
+
+import { fakeBackendProvider } from "./helpers/fake-backend";
+import { AuthService } from './services/auth.service';
+
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { NoAccessComponent } from './no-access/no-access.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    AdminComponent,
+    NoAccessComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    RouterModule.forRoot([
+      {path : '' , component : HomeComponent},
+      {path : 'login' , component : LoginComponent},
+      {path : 'admin' , component : AdminComponent},
+      {path : 'no-access' , component : NoAccessComponent},
+    ])
   ],
-  providers: [],
+  providers: [AuthService,fakeBackendProvider,MockBackend,BaseRequestOptions],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
