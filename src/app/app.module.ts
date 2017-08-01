@@ -10,6 +10,7 @@ import { fakeBackendProvider } from "./helpers/fake-backend";
 import { AuthService } from './services/auth.service';
 
 import { AuthGuard } from './services/auth-guard.service';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
 
 
 import { AppComponent } from './app.component';
@@ -33,11 +34,11 @@ import { AdminComponent } from './admin/admin.component';
     RouterModule.forRoot([
       {path : '' , component : HomeComponent},
       {path : 'login' , component : LoginComponent},
-      {path : 'admin' , component : AdminComponent,canActivate:[AuthGuard]},
+      {path : 'admin' , component : AdminComponent,canActivate:[AuthGuard,AdminAuthGuard]},
       {path : 'no-access' , component : NoAccessComponent},
     ])
   ],
-  providers: [AuthService,fakeBackendProvider,MockBackend,BaseRequestOptions,AuthGuard],
+  providers: [AuthService,fakeBackendProvider,MockBackend,BaseRequestOptions,AuthGuard,AdminAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
