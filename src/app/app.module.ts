@@ -9,6 +9,8 @@ import { MockBackend } from '@angular/http/testing';
 import { fakeBackendProvider } from "./helpers/fake-backend";
 import { AuthService } from './services/auth.service';
 
+import { AuthGuard } from './services/auth-guard.service';
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -31,11 +33,11 @@ import { AdminComponent } from './admin/admin.component';
     RouterModule.forRoot([
       {path : '' , component : HomeComponent},
       {path : 'login' , component : LoginComponent},
-      {path : 'admin' , component : AdminComponent},
+      {path : 'admin' , component : AdminComponent,canActivate:[AuthGuard]},
       {path : 'no-access' , component : NoAccessComponent},
     ])
   ],
-  providers: [AuthService,fakeBackendProvider,MockBackend,BaseRequestOptions],
+  providers: [AuthService,fakeBackendProvider,MockBackend,BaseRequestOptions,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
