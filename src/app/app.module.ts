@@ -53,9 +53,9 @@ import { AdminComponent } from './admin/admin.component';
         headerName: 'Authorization',
         headerPrefix: 'Bearer',
         tokenName: 'token',
-        tokenGetter: (() => localStorage.getItem('token')),
+        tokenGetter: ()  => localStorage.getItem('token'), // Not able to fix this issue as i am strggling with this have serach more on git hub
         globalHeaders: [{ 'Content-Type': 'application/json' }],
-        noJwtError: true})
+        noJwtError: false})
     ],
   bootstrap: [AppComponent]
 })
